@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="http://fonts.googleapis.com/css?family=Dosis" rel="stylesheet" type="text/css">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <title>Tabs to Accordion</title>
+    <style>
+      #navlist {
+        padding: 3px 0;
+        margin: 0;
+        border-bottom: 1px solid #778;
+      }
+
+      #navlist li {
+        list-style: none;
+        margin: 0;
+        display: inline;
+      }
+
+      #navlist li a {
+        font-size: 18px;
+        padding: 3px 0.5em;
+        margin-left: 3px;
+        border: 1px solid #778;
+        border-bottom: none;
+        background: #DDE;
+        text-decoration: none;
+      }
+
+      #navlist .active a {
+        background: white;
+        border-bottom: 1px solid white;
+      }
+      #panels {
+        height: 200px;
+        border: 1px solid;
+        border-top: none;
+      }
+      .panel {
+        display: none;
+        text-align: center;
+        padding: 10px;
+        font-size: 22px;
+      }
+      .panel.current {
+        display: block !important;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Responsive tabs</h1>
+    <h2>...go ahead and resize that window</h2>
+    <div id="tab-container" aria-multiselectable="false">
+      <ul id="navlist" role="tablist">
+        <li class="active">
+          <a role="tab" href="#" aria-controls="panel-1">Item one</a>
+        </li>
+        <li>
+          <a role="tab" href="#" aria-controls="panel-2">Item two</a>
+        </li>
+        <li>
+          <a role="tab" href="#" aria-controls="panel-3">Item three</a>
+        </li>
+        <li>
+          <a role="tab" href="#" aria-controls="panel-4">Item four</a>
+        </li>
+      </ul>
+      <div id="panels">
+        <div class="panel current" id="panel-1">
+          I am panel 1 content
+        </div>
+        <div class="panel" id="panel-2">
+          I am panel 2 content
+        </div>
+        <div class="panel" id="panel-3">
+          I am panel 3 content
+        </div>
+        <div class="panel" id="panel-4">
+          I am panel 4 content
+        </div>
+      </div>
+    </div>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
+    <script type="text/javascript">
+      // Debounced Resize() jQuery Plugin
+      // Author: Paul Irish
+      (function($, sr){
+        // debouncing function from John Hann
+        // http://unscriptable.com/index.php/2009/03/20/debouncing-javascript-methods/
+        var debounce = function (func, threshold, execAsap) {
+            var timeout;
+
+            return function debounced () {
+                var obj = this, args = arguments;
+                function delayed () {
+                    if (!execAsap)
+                        func.apply(obj, args);
+                    timeout = null;
+                };
+
+                if (timeout)
+                    clearTimeout(timeout);
+                else if (execAsap)
+                    func.apply(obj, args);
+
+                timeout = setTimeout(delayed, threshold || 100);
+            };
+        }
+        // smartresize
+        jQuery.fn[sr] = function(fn){  return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
+
+      })(jQuery,'smartresize');
+
+
+    // RESIZE EVENT HERE:
+    $(window).smartresize(function(){
+    });
+    </script>
+  </body>
+</html>
