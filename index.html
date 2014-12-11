@@ -176,14 +176,18 @@
       $navlist.on('keydown', 'li a', function (keyVent) {
         var arrows = [37, 38, 39, 40];
         var which = keyVent.which;
-        var target= keyVent.target;
+        var target = keyVent.target;
         if ($.inArray(which, arrows) > -1) {
           var adjacentTab = findAdjacentTab(target, $navlist, which);
 
           if (adjacentTab) {
             adjacentTab.focus();
-            setActiveAndInactive(adjacentTab, $navlist);
+            // if desired behavior is that when tab recieves focus -> make it the active tab:
+            // setActiveAndInactive(adjacentTab, $navlist);
           }
+        } else if (which === 13 || which === 32) {
+          keyVent.preventDefault(); // don't scroll the page around...
+          target.click();
         }
       });
 
