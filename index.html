@@ -49,6 +49,55 @@
         width: 85%;
         margin: 0 auto;
       }
+
+      /*ACCORDION VIEW*/
+      .accordion-view #navlist {
+        padding: 3px 0;
+      }
+
+      .accordion-view #navlist li {
+        display: block;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .accordion-view #navlist li a {
+        font-size: 18px;
+        padding: 3px 0.5em;
+        border: 1px solid #778;
+        background: #DDE;
+        text-decoration: none;
+        display: inline-block;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .accordion-view #navlist .active a {
+        background: white;
+      }
+
+      .accordion-view #panels {
+        display: none;
+      }
+
+      .accordion-view .panel {
+        display: none;
+        width: 100%;
+        height: 200px;
+        border: 1px solid;
+        box-sizing: border-box;
+        border-top: none;
+      }
+
+      .accordion-view .panel.current {
+        display: block;
+      }
+
+      #tab-container.accordion-view {
+        width: 85%;
+        margin: 0 auto;
+      }
+
     </style>
   </head>
   <body>
@@ -87,6 +136,8 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
     <script type="text/javascript">
       var $navlist = $('#navlist');
+      var $tabContainer = $('#tab-container');
+      var $panels = $('#panels');
 
       $navlist.on('keydown', 'li a', function (keyVent) {
         var arrows = [37, 38, 39, 40];
@@ -198,15 +249,35 @@
         if (winWidth <= 800 && !isAccordionView) {
           console.log('accordion view!!!');
           // switch to the accordion view
-          //
-          //
+          $tabContainer
+            .removeClass('tabs-view')
+            .addClass('accordion-view');
+
+          // fix the markup to be more suited for accordions
+          $panels.find('.panel').each(function () {
+            var panelID = this.id;
+            var assocLink = panelID && $('#navlist a[aria-controls="' + panelID + '"]')[0];
+            if (assocLink) {
+              $(assocLink.parentNode).append(this);
+            }
+          });
+
           isAccordionView = true;
           isTabsView = false;
         } else if (winWidth > 800 && !isTabsView) {
           console.log('tabs view!!!');
+          var wasAccordion = $tabContainer.hasClass('accordion-view');
           // switch to the tabs view
-          //
-          //
+          $tabContainer
+            .removeClass('accordion-view')
+            .addClass('tabs-view');
+
+          if (wasAccordion) {
+            $navlist.find('.panel').each(function () {
+              $(panels).append(this);
+            });
+          }
+
           isTabsView = true;
           isAccordionView = false;
         }
