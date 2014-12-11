@@ -5,83 +5,159 @@
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <title>Tabs to Accordion</title>
     <style>
-      #navlist {
+      .tabs-view #navlist {
         padding: 3px 0;
         margin: 0;
         border-bottom: 1px solid #778;
       }
 
-      #navlist li {
+      .tabs-view #navlist li {
         list-style: none;
         margin: 0;
         display: inline;
       }
 
-      #navlist li a {
+      .tabs-view #navlist li a {
         font-size: 18px;
         padding: 3px 0.5em;
-        margin-left: 3px;
         border: 1px solid #778;
         border-bottom: none;
         background: #DDE;
         text-decoration: none;
       }
 
-      #navlist .active a {
+      .tabs-view #navlist .active a {
         background: white;
         border-bottom: 1px solid white;
       }
-      #panels {
+      .tabs-view #panels {
         height: 200px;
         border: 1px solid;
         border-top: none;
       }
-      .panel {
+      .tabs-view .panel {
         display: none;
         text-align: center;
         padding: 10px;
         font-size: 22px;
       }
-      .panel.current {
+      .tabs-view .panel.current {
         display: block !important;
+      }
+
+      #tab-container.tabs-view {
+        width: 85%;
+        margin: 0 auto;
       }
     </style>
   </head>
   <body>
     <h1>Responsive tabs</h1>
     <h2>...go ahead and resize that window</h2>
-    <div id="tab-container" aria-multiselectable="false">
+    <div id="tab-container" aria-multiselectable="false" class="tabs-view">
       <ul id="navlist" role="tablist">
         <li class="active">
-          <a role="tab" href="#" aria-controls="panel-1">Item one</a>
+          <a role="tab" tabindex="0" href="#" aria-controls="panel-1" aria-selected="true">Item one</a>
         </li>
         <li>
-          <a role="tab" href="#" aria-controls="panel-2">Item two</a>
+          <a role="tab" tabindex="-1" href="#" aria-controls="panel-2" aria-selected="false">Item two</a>
         </li>
         <li>
-          <a role="tab" href="#" aria-controls="panel-3">Item three</a>
+          <a role="tab" tabindex="-1" href="#" aria-controls="panel-3" aria-selected="false">Item three</a>
         </li>
         <li>
-          <a role="tab" href="#" aria-controls="panel-4">Item four</a>
+          <a role="tab" tabindex="-1" href="#" aria-controls="panel-4" aria-selected="false">Item four</a>
         </li>
       </ul>
       <div id="panels">
-        <div class="panel current" id="panel-1">
+        <div aria-hidden="false" class="panel current" id="panel-1">
           I am panel 1 content
         </div>
-        <div class="panel" id="panel-2">
+        <div aria-hidden="true" class="panel" id="panel-2">
           I am panel 2 content
         </div>
-        <div class="panel" id="panel-3">
+        <div aria-hidden="true" class="panel" id="panel-3">
           I am panel 3 content
         </div>
-        <div class="panel" id="panel-4">
+        <div aria-hidden="true" class="panel" id="panel-4">
           I am panel 4 content
         </div>
       </div>
     </div>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
     <script type="text/javascript">
+      var $navlist = $('#navlist');
+
+      $navlist.on('keydown', 'li a', function (keyVent) {
+        var arrows = [37, 38, 39, 40];
+        var which = keyVent.which;
+        var target= keyVent.target;
+        if ($.inArray(which, arrows) > -1) {
+          var adjacentTab = findAdjacentTab(target, $navlist, which);
+
+          if (adjacentTab) {
+            adjacentTab.focus();
+            setActiveAndInactive(adjacentTab, $navlist);
+          }
+        }
+      });
+
+      // click support
+      $navlist.on('click', 'li a', function () {
+        setActiveAndInactive(this, $navlist);
+      });
+
+      function findAdjacentTab(startTab, $list, key) {
+        var dir = (key === 37 || key === 38) ? 'prev' : 'next';
+        var adjacentTab = (dir === 'prev') ?
+                          $(startTab.parentNode).prev()[0] :
+                          $(startTab.parentNode).next()[0];
+
+        if (!adjacentTab) {
+          var allTabs = $list.find('li');
+          if (dir === 'prev') {
+            adjacentTab = allTabs[allTabs.length - 1];
+          } else {
+            adjacentTab = allTabs[0];
+          }
+        }
+
+        return $(adjacentTab).find('a')[0];
+      }
+
+      function setActiveAndInactive(newActive, $list) {
+        $list.find('li').each(function () {
+          var assocPanelID = $(this)
+                                .find('a')
+                                .first()
+                                .attr('aria-controls');
+          var anchor = $(this).find('a')[0];
+
+          if (this !== newActive.parentNode) {
+            $(this).removeClass('active');
+            anchor.tabIndex = -1;
+            anchor.setAttribute('aria-selected', 'false');
+            $('#' + assocPanelID)
+              .removeClass('current')
+              .attr('aria-hidden', 'true');
+          } else {
+            $(this).addClass('active');
+            anchor.tabIndex = 0;
+            anchor.setAttribute('aria-selected', 'true');
+            $('#' + assocPanelID)
+              .addClass('current')
+              .attr('aria-hidden', 'false');
+          }
+
+        });
+      }
+
+      // initial configuration based on window's width
+      var isAccordionView = false;
+      var isTabsView = false;
+
+      determineView();
+
       // Debounced Resize() jQuery Plugin
       // Author: Paul Irish
       (function($, sr){
@@ -112,9 +188,29 @@
       })(jQuery,'smartresize');
 
 
-    // RESIZE EVENT HERE:
-    $(window).smartresize(function(){
-    });
+      // RESIZE EVENT:
+      $(window).smartresize(determineView);
+
+
+      function determineView() {
+        var winWidth = $(window).width();
+
+        if (winWidth <= 800 && !isAccordionView) {
+          console.log('accordion view!!!');
+          // switch to the accordion view
+          //
+          //
+          isAccordionView = true;
+          isTabsView = false;
+        } else if (winWidth > 800 && !isTabsView) {
+          console.log('tabs view!!!');
+          // switch to the tabs view
+          //
+          //
+          isTabsView = true;
+          isAccordionView = false;
+        }
+      }
     </script>
   </body>
 </html>
