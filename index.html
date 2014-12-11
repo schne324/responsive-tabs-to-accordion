@@ -284,7 +284,7 @@
       function determineView() {
         var winWidth = $(window).width();
 
-        if (winWidth <= 800 && !isAccordionView) {
+        if (winWidth <= 800 && !isAccordionView) { // SHOW ACCORDION VIEW
           console.log('accordion view!!!');
           // switch to the accordion view
           $tabContainer
@@ -302,8 +302,7 @@
 
           isAccordionView = true;
           isTabsView = false;
-        } else if (winWidth > 800 && !isTabsView) {
-          console.log('tabs view!!!');
+        } else if (winWidth > 800 && !isTabsView) { // SHOW TABS VIEW
           var wasAccordion = $tabContainer.hasClass('accordion-view');
           // switch to the tabs view
           $tabContainer

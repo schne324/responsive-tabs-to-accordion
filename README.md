@@ -9,6 +9,20 @@ Responsive tabs that snap down to accordion for mobile viewports
 - No use of media queries, so this will work in IE8 :)
 - Just the tabs markup is needed...In mobile views, the dom is shifted around to create ideal accordion markup
 
+- Full keyboard / a11y support:
+    - Use arrow keys to move between tabs / accordion heads
+    - For the tabs...
+        - `role="tablist"` is applied to the `<ul />` (parent of each tab item)
+        - `role="tab"` is applied to each tab element
+        - `role="tabpanel"` is applied to each tab panel
+        - `aria-selected="true"` is applied to a tab when it is selected
+        - `aria-selected="false"` is applied to a tab when it is NOT selected
+        - `aria-hidden="false"` is applied to a tabpanel when it is active
+        - `aria-hidden="true"` is applied to each tabpanel that is NOT active
+        - `aria-controls` is applied to each tab element which provides association between a tab and it's associated panel
+    - For the accordion...
+        - TODO---a11y roles/attributes for accordion
+
 
 ## LICENSE:
 The MIT License
