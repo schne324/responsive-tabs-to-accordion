@@ -17,7 +17,7 @@
         display: inline;
       }
 
-      .tabs-view #navlist li a {
+      .tabs-view #navlist > li > a {
         font-size: 18px;
         padding: 3px 0.5em;
         border: 1px solid #778;
@@ -31,7 +31,6 @@
         border-bottom: 1px solid white;
       }
       .tabs-view #panels {
-        height: 200px;
         border: 1px solid;
         border-top: none;
       }
@@ -39,7 +38,7 @@
         display: none;
         text-align: center;
         padding: 10px;
-        font-size: 22px;
+        font-size: 18px;
       }
       .tabs-view .panel.current {
         display: block !important;
@@ -61,8 +60,8 @@
         position: relative;
       }
 
-      .accordion-view #navlist li a {
-        font-size: 18px;
+      .accordion-view #navlist > li > a {
+        font-size: 24px;
         padding: 3px 0.5em;
         border: 1px solid #778;
         background: #DDE;
@@ -83,10 +82,11 @@
       .accordion-view .panel {
         display: none;
         width: 100%;
-        height: 200px;
         border: 1px solid;
         box-sizing: border-box;
         border-top: none;
+        padding: 10px;
+        font-size: 18px;
       }
 
       .accordion-view .panel.current {
@@ -106,30 +106,64 @@
     <div id="tab-container" aria-multiselectable="false" class="tabs-view">
       <ul id="navlist" role="tablist">
         <li class="active">
-          <a role="tab" tabindex="0" href="#" aria-controls="panel-1" aria-selected="true">Item one</a>
+          <a role="tab" tabindex="0" href="#" aria-controls="panel-1" aria-selected="true">Tab one</a>
         </li>
         <li>
-          <a role="tab" tabindex="-1" href="#" aria-controls="panel-2" aria-selected="false">Item two</a>
+          <a role="tab" tabindex="-1" href="#" aria-controls="panel-2" aria-selected="false">Tab two</a>
         </li>
         <li>
-          <a role="tab" tabindex="-1" href="#" aria-controls="panel-3" aria-selected="false">Item three</a>
+          <a role="tab" tabindex="-1" href="#" aria-controls="panel-3" aria-selected="false">Tab three</a>
         </li>
         <li>
-          <a role="tab" tabindex="-1" href="#" aria-controls="panel-4" aria-selected="false">Item four</a>
+          <a role="tab" tabindex="-1" href="#" aria-controls="panel-4" aria-selected="false">Tab four</a>
         </li>
       </ul>
       <div id="panels">
         <div aria-hidden="false" class="panel current" id="panel-1">
-          I am panel 1 content
+          <h3>Panel 1 content</h3>
+          <div class="panel-body">
+            Aenean feugiat velit non est tempor, id consequat nunc vehicula. Suspendisse potenti. Duis elit lectus, fringilla in scelerisque at, laoreet nec nibh. Nam ac molestie nulla. Duis eu quam lacinia, bibendum erat sed, aliquet dolor. Quisque sit amet sem non massa rhoncus ornare nec eu leo. Aliquam consequat pulvinar venenatis. In lacinia sem nec pulvinar tincidunt. Cras risus quam, tincidunt vitae libero eget, gravida commodo ligula.
+            <a href="#">fake link</a>
+          </div>
         </div>
         <div aria-hidden="true" class="panel" id="panel-2">
-          I am panel 2 content
+          <h3>Panel 2 content</h3>
+          <div class="panel-body">
+            <div>
+              <label for="voodoo">voodoo lady</label>
+              <input type="radio" name="song" id="voodoo" value="voodoo lady">
+            </div>
+            <div>
+              <label for="transdermal">transdermal celebration</label>
+              <input type="radio" name="song" id="transdermal" value="transdermal celebration">
+            </div>
+            <div>
+              <label for="marbles">happy little marbles</label>
+              <input type="radio" name="song" id="marbles" value="happy little marbles">
+            </div>
+            <div>
+              <label for="roses">roses are free</label>
+              <input type="radio" name="song" id="roses" value="roses are free">
+            </div>
+            <div>
+              <input type="submit" value="submit">
+            </div>
+          </div>
         </div>
         <div aria-hidden="true" class="panel" id="panel-3">
-          I am panel 3 content
+          <h3>Panel 3 content</h3>
+          <div class="panel-body">
+            Donec eu nisl et tellus mattis pharetra. Pellentesque facilisis pellentesque sem sit amet posuere. Duis eleifend, ante nec porttitor tincidunt, dolor risus posuere massa, at facilisis ligula massa ut augue. Suspendisse ut finibus augue, fringilla consequat magna. Etiam ut ultricies massa. Nullam id dui nec urna sagittis tempor at rhoncus lacus. Aenean mi quam, efficitur id purus nec, porttitor lobortis enim. Donec est libero, bibendum vel neque ut, volutpat gravida lectus. Curabitur sodales, enim ut aliquam fringilla, erat diam aliquam augue, a consectetur urna tortor sed libero. Aliquam scelerisque diam ac felis vestibulum, et porttitor mauris tincidunt. Proin congue ultrices metus sed vulputate. Integer egestas, nunc sed condimentum egestas, velit ex rhoncus libero, eget sagittis nibh nulla ut diam. Donec porta metus sed mi sollicitudin posuere. Etiam non augue a elit pharetra blandit ac sed massa. In pharetra est at purus pellentesque suscipit.
+          </div>
         </div>
         <div aria-hidden="true" class="panel" id="panel-4">
-          I am panel 4 content
+          <h3>Panel 4 content</h3>
+          <div class="panel-body">
+              Fusce faucibus vel orci eget commodo. Proin quis elementum lectus. Aliquam sed velit neque. Quisque enim elit, porttitor nec nisi in, laoreet condimentum libero. Etiam accumsan mauris id tincidunt viverra. Cras euismod suscipit lorem nec aliquet. Mauris suscipit massa id nunc facilisis sodales.
+              <div>
+                <a href="#">Read More...</a>
+              </div>
+          </div>
         </div>
       </div>
     </div>
