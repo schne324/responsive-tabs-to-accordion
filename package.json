@@ -1,0 +1,24 @@
+{
+  "name": "responsive-tabs-to-accordion",
+  "version": "1.0.0",
+  "description": "Responsive tabs that snap down to accordion for mobile viewports",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/schne324/responsive-tabs-to-accordion.git"
+  },
+  "author": "schne324",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/schne324/responsive-tabs-to-accordion/issues"
+  },
+  "homepage": "https://github.com/schne324/responsive-tabs-to-accordion",
+  "devDependencies": {
+    "mocha": "^2.0.1"
+  },
+  "dependencies": {
+    "duo": "^0.8.10"
+  }
+}
