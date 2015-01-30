@@ -11,13 +11,30 @@
       var adjacentTab = findAdjacentTab(target, $navlist, which);
 
       if (adjacentTab) {
+        keyVent.preventDefault();
         adjacentTab.focus();
         // if desired behavior is that when tab recieves focus -> make it the active tab:
-        // setActiveAndInactive(adjacentTab, $navlist);
+        setActiveAndInactive(adjacentTab, $navlist);
       }
-    } else if (which === 13 || which === 32) {
+    } else if (which === 13 || which === 32) { // ENTER |or| SPACE
       keyVent.preventDefault(); // don't scroll the page around...
       target.click();
+    } else if (which === 34) { // PAGE DOWN
+      keyVent.preventDefault(); // don't scroll the page
+      var assocPanel = $('#' + this.getAttribute('aria-controls'));
+      if (assocPanel) {
+        assocPanel.focus();
+      }
+    }
+  });
+
+  $(document.body).on('keydown', '.panel', function (e) {
+    if (e.which === 33) { // PAGE UP
+      e.preventDefault(); // don't scroll
+      var activeTab = $navlist.find('li.active a')[0];
+      if (activeTab) {
+        activeTab.focus();
+      }
     }
   });
 
