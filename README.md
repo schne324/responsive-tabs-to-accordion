@@ -21,7 +21,7 @@ Responsive tabs that snap down to accordion for mobile viewports
         - `aria-hidden="true"` is applied to each tabpanel that is NOT active
         - `aria-controls` is applied to each tab element which provides association between a tab and it's associated panel
     - For the accordion...
-        - TODO---a11y roles/attributes for accordion
+        - same attributes as tabs
 
 
 ## LICENSE:
