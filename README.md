@@ -11,6 +11,8 @@ Responsive tabs that snap down to accordion for mobile viewports
 
 - Full keyboard / a11y support:
     - Use arrow keys to move between tabs / accordion heads
+    - When focus is on a tab, use PAGE DOWN to focus the associated panel
+    - When focus is on or within the panel, use PAGE UP to focus the associated tab
     - For the tabs...
         - `role="tablist"` is applied to the `<ul />` (parent of each tab item)
         - `role="tab"` is applied to each tab element
