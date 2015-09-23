@@ -23,7 +23,7 @@
       keyVent.preventDefault(); // don't scroll the page
       var assocPanel = $('#' + this.getAttribute('aria-controls'));
       if (assocPanel) {
-        assocPanel.focus();
+        assocPanel.prop('tabIndex', -1).focus();
       }
     }
   });
