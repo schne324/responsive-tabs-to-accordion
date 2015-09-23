@@ -39,7 +39,8 @@
   });
 
   // click support
-  $navlist.on('click', 'li a', function () {
+  $navlist.on('click', 'li a', function (e) {
+    e.preventDefault();
     setActiveAndInactive(this, $navlist);
   });
 
@@ -84,7 +85,6 @@
           .addClass('current')
           .attr('aria-hidden', 'false');
       }
-
     });
   }
 
